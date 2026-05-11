@@ -1,0 +1,21 @@
+name: Hello GitHub Actions
+
+on:
+  push:
+    branches: [ "main", "feature/first-action" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  hello:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Hent kode fra repoet
+        uses: actions/checkout@v4
+
+      - name: Si hei
+        run: echo "Hello from GitHub Actions"
+
+      - name: Vis filer i repoet
+        run: ls
