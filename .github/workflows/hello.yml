@@ -1,21 +1,35 @@
-name: Hello GitHub Actions
+name: CI - Basic checks
 
 on:
   push:
-    branches: [ "main", "feature/first-action" ]
+    branches: [ "main", "feature/basic-ci-checks" ]
   pull_request:
     branches: [ "main" ]
 
 jobs:
-  hello:
+  basic-checks:
     runs-on: ubuntu-latest
 
     steps:
       - name: Hent kode fra repoet
         uses: actions/checkout@v4
 
-      - name: Si hei
-        run: echo "Hello from GitHub Actions"
+      - name: Vis hvilken branch som kjøres
+        run: |
+          echo "Branch: $GITHUB_REF_NAME"
+          echo "Commit: $GITHUB_SHA"
 
-      - name: Vis filer i repoet
-        run: ls
+      - name: Sjekk at README finnes
+        run: |
+          if [ -f README.md ]; then
+            echo "README.md finnes"
+          else
+            echo "FEIL: README.md mangler"
+            exit 1
+          fi
+
+      - name: Vis filer i prosjektet
+        run: ls -la
+
+      - name: Ferdig
+        run: echo "Basic CI checks fullført"
